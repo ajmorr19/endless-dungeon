@@ -126,7 +126,7 @@ function love.draw()
 
   love.graphics.draw(door, 390, 0, 0, 2) -- Top Door
   love.graphics.draw(door, 390, 575, 0, 2) -- Bottom Door
-  love.graphics.draw(currentDoor, 0, 319) -- Left Door
+  love.graphics.draw(currentDoor, 0, 319, 0, 2) -- Left Door
   
   love.graphics.draw(statue1, 65, 65, 0, 2)
 
