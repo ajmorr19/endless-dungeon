@@ -5,7 +5,6 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 
 function love.load()
   -- Create the player variables
-  img = love.graphics.newImage('assets-1/player/base/octopode_1.png')
   x = 400
   y = 300
   playerImg = love.graphics.newImage('assets-2/player/base/merfolk_m.png')
@@ -49,19 +48,19 @@ function love.load()
   }
 
 collision = {
-  {wall, wall, wall, wall, wall, nil, wall, wall, wall, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, cage1, cage2, cage3, cage, cage1, cage2, cage3, cage, wall},
-    {wall, wall, wall, wall, wall, door, wall, wall, wall, wall},
+  {wall, wall, wall, wall, wall, "nil", wall, wall, wall, wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, "nil", "nil", "nil", "nil", "nil", "nil", "nil", "nil", wall},
+    {wall, wall, wall, wall, wall, door, wall, swall, wall, wall},
 
 }
    
@@ -71,7 +70,7 @@ collision = {
 end
 function love.update(dt)
   if love.keyboard.isDown('w') then
-    if collision:cc(x, y-4, 16, 16) then
+    if collision:cc(x, y-4, 16, 16) == false then
       y = y - 5
     end
     if cc(x, y, 64, 64,   200, 200, 64, 64) == true then
@@ -79,7 +78,7 @@ function love.update(dt)
     end
   end
   if love.keyboard.isDown('s') then
-    if collision:cc(x, y+4, 16, 16) then
+    if collision:cc(x, y+4, 16, 16) == false then
       y = y + 5
     end
     if cc(x, y, 64, 64,   200, 200, 64, 64) == true then
@@ -87,7 +86,7 @@ function love.update(dt)
     end
   end
   if love.keyboard.isDown('d') then
-    if collision:cc(x+4, y, 16, 16) then
+    if collision:cc(x+4, y, 16, 16) == false then
       x = x + 5
     end
     if cc(x, y, 64, 64,   200, 200, 64, 64) == true then
@@ -95,15 +94,17 @@ function love.update(dt)
     end
   end
   if love.keyboard.isDown('a') then
-    if collision:cc(x-4, y, 16, 16) then
+    if collision:cc(x-4, y, 16, 16) == false then
       x = x - 5
     end
     if cc(x, y, 64, 64,   200, 200, 64, 64) == true then
       currentDoor = openDoor
     end
   end
-  if cc(x, y, 64, 64,   0, 319, 64, 64) == true then
-    love.exitModule{};
+  if currentDoor == openDoor then
+    if cc(x, y, 64, 64,  0, 319, 64, 64) == true then
+      love.exitModule{};
+    end
   end
 end
    
@@ -116,13 +117,6 @@ function love.draw()
   map:draw()
   collision:draw()
  
-
-  love.graphics.draw(trap, 385, 130, 0, 2) -- Bottom Middle Pit
-  love.graphics.draw(trap, 320, 130, 0, 2)
-  love.graphics.draw(trap, 450, 130, 0, 2)
-  love.graphics.draw(trap, 450, 65, 0, 2)
-  love.graphics.draw(trap, 320, 65, 0, 2)
-
 
   love.graphics.draw(door, 390, 0, 0, 2) -- Top Door
   love.graphics.draw(door, 390, 575, 0, 2) -- Bottom Door
